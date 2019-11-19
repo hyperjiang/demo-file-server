@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-upload
-      action="https://jsonplaceholder.typicode.com/posts/"
+      action="http://localhost:9090/upload"
       list-type="picture-card"
       :on-preview="handlePreview"
       :on-remove="handleRemove"

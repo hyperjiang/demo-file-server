@@ -1,5 +1,12 @@
 <template>
-  <div class="about">
-    <h1>This is an about page</h1>
+  <div>
+    <p>This is the frontend of demo file server, check the source code here:</p>
+    <p>
+      <el-link
+        type="primary"
+        href="https://github.com/hyperjiang/demo-file-server/tree/master/frontend"
+        target="_blank"
+      >https://github.com/hyperjiang/demo-file-server/tree/master/frontend</el-link>
+    </p>
   </div>
 </template>

@@ -12,7 +12,7 @@
       <i class="el-icon-plus"></i>
     </el-upload>
     <el-dialog :visible.sync="dialogVisible" width="30%">
-      <img width="100%" :src="dialogImageUrl" alt="" />
+      <img width="100%" :src="dialogImageUrl" alt />
     </el-dialog>
   </div>
 </template>
@@ -23,17 +23,18 @@ export default {
     return {
       dialogImageUrl: '',
       dialogVisible: false,
-      fileList: [
-        {
-          name: 'food.jpeg',
-          url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg',
-        },
-        {
-          name: 'food2.jpeg',
-          url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg',
-        },
-      ],
+      fileList: [],
     };
+  },
+  created() {
+    const vm = this;
+    this.$axios
+      .get('http://localhost:9090/list')
+      .then((response) => {
+        if (response.data != null && response.data.length > 0) {
+          vm.fileList = response.data;
+        }
+      });
   },
   methods: {
     handleRemove(file, fileList) {

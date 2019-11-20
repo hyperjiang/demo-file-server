@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
+	"strings"
 
 	env "github.com/caarlos0/env/v6"
 	"github.com/gin-contrib/cors"
@@ -22,15 +23,16 @@ type fileInfo struct {
 	URL  string `json:"url"`
 }
 
+var cfg config
+
 func newFileInfo(filename string) fileInfo {
 	return fileInfo{
 		Name: filename,
-		URL:  "/files/" + filename,
+		URL:  fmt.Sprintf("http://localhost:%d/files/%s", cfg.Port, filename),
 	}
 }
 
 func main() {
-	cfg := config{}
 	if err := env.Parse(&cfg); err != nil {
 		log.Fatal(err)
 	}
@@ -49,14 +51,14 @@ func main() {
 	router.GET("/list", func(c *gin.Context) {
 		var files []fileInfo
 		filepath.Walk(cfg.StorageDir, func(path string, info os.FileInfo, err error) error {
+			log.Println(path)
 			if err != nil {
 				log.Printf("fail to access path %q: %v\n", path, err)
 				return err
 			}
-			if info.IsDir() {
-				return filepath.SkipDir
+			if !info.IsDir() && !strings.HasPrefix(info.Name(), ".") {
+				files = append(files, newFileInfo(info.Name()))
 			}
-			files = append(files, newFileInfo(info.Name()))
 			return nil
 		})
 

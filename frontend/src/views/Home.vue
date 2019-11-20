@@ -35,15 +35,15 @@ export default {
     });
   },
   methods: {
-    handleRemove(file, fileList) {
-      console.log(file, fileList);
+    handleRemove(file) {
+      this.$axios.delete(file.url);
     },
     handlePreview(file) {
       this.dialogImageUrl = file.url;
       this.dialogVisible = true;
     },
     beforeRemove(file) {
-      return this.$confirm(`确定移除 ${file.name}？`);
+      return this.$confirm(`Are you sure to delete ${file.name}？`);
     },
   },
 };

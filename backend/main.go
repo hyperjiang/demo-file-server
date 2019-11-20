@@ -65,6 +65,7 @@ func main() {
 		c.JSON(http.StatusOK, files)
 	})
 
+	// upload a file
 	router.POST("/upload", func(c *gin.Context) {
 		// single file
 		file, _ := c.FormFile("file")
@@ -74,6 +75,18 @@ func main() {
 		c.SaveUploadedFile(file, dst)
 
 		c.JSON(http.StatusOK, newFileInfo(file.Filename))
+	})
+
+	// delete a file
+	router.DELETE("/files/:path", func(c *gin.Context) {
+		path := c.Param("path")
+		dst := filepath.Join(cfg.StorageDir, path)
+		err := os.Remove(dst)
+		if err != nil {
+			c.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
+			return
+		}
+		c.JSON(http.StatusOK, nil)
 	})
 
 	router.Run(fmt.Sprintf(":%d", cfg.Port))

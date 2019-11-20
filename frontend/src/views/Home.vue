@@ -28,13 +28,11 @@ export default {
   },
   created() {
     const vm = this;
-    this.$axios
-      .get('http://localhost:9090/list')
-      .then((response) => {
-        if (response.data != null && response.data.length > 0) {
-          vm.fileList = response.data;
-        }
-      });
+    this.$axios.get('http://localhost:9090/list').then((response) => {
+      if (response.data != null && response.data.length > 0) {
+        vm.fileList = response.data;
+      }
+    });
   },
   methods: {
     handleRemove(file, fileList) {

@@ -1,0 +1,28 @@
+version: '3.7'
+services:
+  file-server-backend:
+    container_name: file-server-backend
+    hostname: file-server-backend
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    ports:
+      - 9090:9090
+    volumes:
+      - "./backend/files:/files"
+    environment:
+      - GO111MODULE=on
+      - PORT=9090
+      - STORAGE_DIR=/files
+  file-server-frontend:
+    depends_on:
+      - file-server-backend
+    container_name: file-server-frontend
+    hostname: file-server-frontend
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    ports:
+      - 8080:80

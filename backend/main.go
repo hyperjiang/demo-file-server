@@ -51,7 +51,6 @@ func main() {
 	router.GET("/list", func(c *gin.Context) {
 		var files []fileInfo
 		filepath.Walk(cfg.StorageDir, func(path string, info os.FileInfo, err error) error {
-			log.Println(path)
 			if err != nil {
 				log.Printf("fail to access path %q: %v\n", path, err)
 				return err

@@ -2,16 +2,16 @@
   <div>
     <el-upload
       action="http://localhost:9090/upload"
-      list-type="picture-card"
+      list-type="picture"
       :on-preview="handlePreview"
       :on-remove="handleRemove"
       :before-remove="beforeRemove"
       multiple
       :file-list="fileList"
     >
-      <i class="el-icon-plus"></i>
+      <el-button size="small" type="primary">Upload</el-button>
     </el-upload>
-    <el-dialog :visible.sync="dialogVisible" width="30%">
+    <el-dialog :visible.sync="dialogVisible">
       <img width="100%" :src="dialogImageUrl" alt />
     </el-dialog>
   </div>

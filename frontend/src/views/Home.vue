@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-upload
-      action="http://localhost:9090/upload"
+      :action="uploadApi"
       list-type="picture"
       :on-preview="handlePreview"
       :on-remove="handleRemove"
@@ -23,12 +23,17 @@ export default {
     return {
       dialogImageUrl: '',
       dialogVisible: false,
+      uploadApi: '',
       fileList: [],
     };
   },
   created() {
     const vm = this;
-    this.$axios.get('http://localhost:9090/list').then((response) => {
+    const listApi = `${process.env.VUE_APP_BACKEND_API}/list`;
+
+    vm.uploadApi = `${process.env.VUE_APP_BACKEND_API}/upload`;
+
+    this.$axios.get(listApi).then((response) => {
       if (response.data != null && response.data.length > 0) {
         vm.fileList = response.data;
       }

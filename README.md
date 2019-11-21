@@ -9,3 +9,5 @@ docker-compose up -d
 ```
 
 Visit http://localhost:8080/
+
+Tips: you can edit `docker-compose.yml` to change exposing ports.
